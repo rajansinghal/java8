@@ -6,13 +6,17 @@ import java.util.stream.Stream;
 /**
  * Created by rsinghal on 11/22/2017.
  */
-public class Example2 {
-    public static void main(String[] args) {
-        Predicate<? super String> predicate = s -> s.startsWith("g");
-        Stream<String> stream1 = Stream.generate(() -> "growl! ");
-        Stream<String> stream2 = Stream.generate(() -> "growl! ");
-        boolean b1 = stream1.anyMatch(predicate);
-        boolean b2 = stream2.allMatch(predicate);
-        System.out.println(b1 + " " + b2);
+
+public class Example2{
+
+    public static void main(String args[]){
+        Move.print();
+    }
+
+    interface Move {
+        public static void main(String []args) {
+            System.out.println("Move");
+        }
+        public static void print(){}
     }
 }
