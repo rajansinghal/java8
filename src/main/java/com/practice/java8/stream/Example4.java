@@ -14,7 +14,10 @@ public class Example4 {
         .filter(x -> x.length() > 1)
         .forEach(System.out::println);
 
-        Stream.iterate(1, x -> x++).limit(5).map(x -> x).forEach(System.out::println);//.collect(Collectors.joining());
+        Stream
+                .iterate(1, x -> x++)
+                .limit(5).map(x -> x)
+                .forEach(System.out::println);//.collect(Collectors.joining());
 
     }
 }

@@ -4,6 +4,8 @@ package com.practice.java8.stream;
  * Created by rsinghal on 2/4/2018.
  */
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -41,5 +43,9 @@ public class CollectExample {
         Stream<String> stream4 = Stream.of("w", "o", "l", "f");
         Set<String> output4 = stream4.collect(Collectors.toSet());
         System.out.println(output4); // [f, w, l, o]
+    }
+
+    public static void example1(){
+        List<Integer> list = Arrays.asList(1,2,3,4);
     }
 }

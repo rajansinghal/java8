@@ -15,7 +15,7 @@ import java.util.stream.Stream;
  */
 public class Example1 {
     public static void main(String[] args) {
-        example11();
+        example12();
 
     }
     public static void example1() {
@@ -135,13 +135,13 @@ public class Example1 {
         System.out.println(b1 + " " + b2);
     }
 
-    /*public static void example13() {
+  /*  public static void example13() {
          List<Integer> list = Arrays.asList(new Integer[] { 3, 4, 5, 6, 7, 8, 9 });
          HashMap<Integer, List<Integer>> map =
          list.stream().collect(Collectors.groupingByConcurrent(in -> in%2==0));
          System.out.println(map.get(true));
-    }*/
-
+    }
+*/
 
     public static void example14(){
         String[] list = {"1","2","3"};
@@ -149,7 +149,8 @@ public class Example1 {
         System.out.println(list[0]);
     }
    /* Intermediate operations are further divided into stateless and stateful operations.
-    Stateless operations, such as filter and map, retain no state from previously seen element when processing a new element -- each element can be processed independently of operations on other elements.
+    Stateless operations, such as filter and map, retain no state from previously seen element when processing a new element -- each element
+     can be processed independently of operations on other elements.
     The stateful operations, such as distinct and sorted, may incorporate state from previously seen elements when processing new elements
     */
 }
