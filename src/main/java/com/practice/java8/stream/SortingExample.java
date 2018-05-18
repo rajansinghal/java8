@@ -20,7 +20,7 @@ public class SortingExample {
         //simpleSortingWithComparator();
        // simpleSortingWithComparatorReversed();
         //sortingWithComparatorMultipleCondition();
-        sortMap();
+        //sortMap();
     }
 
     public static void simpleSorting(){
@@ -79,7 +79,7 @@ public class SortingExample {
         studentMap
                 .entrySet()
                 .stream()
-                //either provide a explicit comparator or as below or
+                //either provide a explicit comparator or
                 //.sorted(Comparator.comparing(Map.Entry::getValue,byNameComparator))
                 //or implement comparable so that jvm come to know how to sort on the basis of value which is student in that case
                 .sorted(Comparator.comparing(Map.Entry::getValue))
@@ -89,6 +89,7 @@ public class SortingExample {
                     System.out.println("Key: " + key +", value: ("+ std.getId() +", "+ std.getName()+", "+ std.getAge()+")");
                 });
     }
+
 
 
     public static List<Developer> getDeveloperList(){

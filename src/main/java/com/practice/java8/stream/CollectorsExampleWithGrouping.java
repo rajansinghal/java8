@@ -22,10 +22,12 @@ public class CollectorsExampleWithGrouping {
         groupbyMultipleFields();
         groupbyMultipleFieldsAndCollectingIntoSet();*/
         //groupbyMultipleFieldsAndSummarizing();
-       // groupbyMultipleFieldsAndCollectingIntoSetWithSpecificField();
+        // groupbyMultipleFieldsAndCollectingIntoSetWithSpecificField();
+
+        groupbySingleFields1();
     }
 
-    public static void groupAndSortingSimple(){
+    public static void groupAndSortingSimple() {
         List<String> items =
                 Arrays.asList("apple", "apple", "banana",
                         "apple", "orange", "banana", "papaya");
@@ -39,6 +41,12 @@ public class CollectorsExampleWithGrouping {
 
         Map<String, Long> finalMap = new LinkedHashMap<>();
 
+        //like this or below
+        result.entrySet().stream().sorted(Comparator.comparing(Map.Entry::getValue,Comparator.reverseOrder())).forEach(e->{
+            finalMap.put(e.getKey(), e.getValue());
+        });
+        System.out.println(finalMap);
+
         //Sort a map and add to finalMap
         result.entrySet().stream()
                 .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
@@ -48,12 +56,25 @@ public class CollectorsExampleWithGrouping {
 
     }
 
-    public  static void groupbySingleFieldsSimpleGroupCount()  throws IOException{
+    public static void groupbySingleFieldsSimpleGroupCount() throws IOException {
         try (Stream<String> line = Files.lines(Paths.get("C:\\Users\\rsinghal\\IdeaProjects\\Java8\\src\\main\\resources\\TextFile"))) {
-            Map<String, Long> counting  = line
+            Map<String, Long> counting = line
                     .map(name -> {
                         String[] tokens = name.split("\\s+");
-                        return  new Employee(tokens[0],Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]));
+                        return new Employee(tokens[0], Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]));
+                    })
+                    .collect(Collectors.groupingBy(Employee::getName, Collectors.counting()));
+
+            System.out.println(counting);
+        }
+    }
+
+    public static void groupbySingleFields() throws IOException {
+        try (Stream<String> line = Files.lines(Paths.get("C:\\Users\\rsinghal\\IdeaProjects\\Java8\\src\\main\\resources\\TextFile"))) {
+            Map<String,Long> counting = line
+                    .map(name -> {
+                        String[] tokens = name.split("\\s+");
+                        return new Employee(tokens[0], Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]));
                     })
                     .collect(Collectors.groupingBy(Employee::getName,Collectors.counting()));
 
@@ -61,78 +82,70 @@ public class CollectorsExampleWithGrouping {
         }
     }
 
-    public  static void groupbySingleFields()  throws IOException{
-        try (Stream<String> line = Files.lines(Paths.get("C:\\Users\\rsinghal\\IdeaProjects\\Java8\\src\\main\\resources\\TextFile"))) {
-            Map<String, List<Employee>> counting  = line
-                    .map(name -> {
-                        String[] tokens = name.split("\\s+");
-                        return  new Employee(tokens[0],Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]));
-                    })
-                    .collect(Collectors.groupingBy(Employee::getName));
 
-            System.out.println(counting);
-        }
-    }
-    public  static void groupbyMultipleFields()  throws IOException{
+
+    public static void groupbyMultipleFields() throws IOException {
         try (Stream<String> line = Files.lines(Paths.get("C:\\Users\\rsinghal\\IdeaProjects\\Java8\\src\\main\\resources\\TextFile"))) {
-            Map<List<String>, List<Employee>> counting  = line
+            Map<List<String>, List<Employee>> counting = line
                     .map(name -> {
                         String[] tokens = name.split("\\s+");
-                        return  new Employee(tokens[0],Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]));
+                        return new Employee(tokens[0], Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]));
                     })
-                    .collect(Collectors.groupingBy(e ->{
-                        return new ArrayList<String>(Arrays.asList(String.valueOf(e.getAge()),String.valueOf(e.getSalary())));
+                    .collect(Collectors.groupingBy(e -> {
+                        return new ArrayList<String>(Arrays.asList(String.valueOf(e.getAge()), String.valueOf(e.getSalary())));
                     }));
 
             System.out.println(counting);
         }
     }
 
-    public  static void groupbyMultipleFieldsAndCollectingIntoSet()  throws IOException{
+    public static void groupbyMultipleFieldsAndCollectingIntoSet() throws IOException {
         try (Stream<String> lines = Files.lines(Paths.get("C:\\Users\\rsinghal\\IdeaProjects\\Java8\\src\\main\\resources\\TextFile"))) {
-            Map<List<String>, Set<Employee>> counting  = lines
+            Map<List<String>, Set<Employee>> counting = lines
                     .map(line -> {
                         String[] tokens = line.split("\\s+");
-                        return  new Employee(tokens[0],Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]));
+                        return new Employee(tokens[0], Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]));
                     })
-                   .collect(Collectors.groupingBy(e -> {
-                        return  new ArrayList<String>(
+                    .collect(Collectors.groupingBy(e -> {
+                        return new ArrayList<String>(
                                 Arrays.asList(
-                                            String.valueOf(e.getAge()),
-                                            String.valueOf(e.getSalary())
+                                        String.valueOf(e.getAge()),
+                                        String.valueOf(e.getSalary())
                                 )
                         );
                     }, Collectors.toSet()));
             System.out.println(counting);
         }
     }
-    public  static void groupbyMultipleFieldsAndCollectingIntoSetWithSpecificField()  throws IOException{
+
+    public static void groupbyMultipleFieldsAndCollectingIntoSetWithSpecificField() throws IOException {
         try (Stream<String> lines = Files.lines(Paths.get("C:\\Users\\rsinghal\\IdeaProjects\\Java8\\src\\main\\resources\\TextFile"))) {
-            Map<List<String>, Set<String>> counting  = lines
+            Map<List<String>, Set<String>> counting = lines
                     .map(line -> {
                         String[] tokens = line.split("\\s+");
-                        return  new Employee(tokens[0],Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]));
+                        return new Employee(tokens[0], Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]));
                     })
                     .collect(Collectors.groupingBy(e -> {
-                        return  new ArrayList<String>(
+                        return new ArrayList<String>(
                                 Arrays.asList(
                                         String.valueOf(e.getAge()),
                                         String.valueOf(e.getSalary())
                                 )
                         );
-                    }, Collectors.mapping(Employee::getName,Collectors.toSet())));
+                    }, Collectors.mapping(Employee::getName, Collectors.toSet())));
             System.out.println(counting);
         }
     }
-    public  static void groupbyMultipleFieldsAndSummarizing()  throws IOException{
+
+    public static void groupbyMultipleFieldsAndSummarizing() throws IOException {
         try (Stream<String> lines = Files.lines(Paths.get("C:\\Users\\rsinghal\\IdeaProjects\\Java8\\src\\main\\resources\\TextFile"))) {
-            Map<List<String>, Integer> counting  = lines
+            Map<List<String>, Integer> counting = lines
                     .map(line -> {
                         String[] tokens = line.split("\\s+");
-                        return  new Employee(tokens[0],Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]));
+                        return new Employee(tokens[0], Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]));
                     })
                     .collect(Collectors.groupingBy(e -> {
-                        return  new ArrayList<String>(
+                        return new ArrayList<String>(
                                 Arrays.asList(
                                         String.valueOf(e.getAge()),
                                         String.valueOf(e.getSalary())
@@ -143,9 +156,29 @@ public class CollectorsExampleWithGrouping {
         }
     }
 
+
+    public static void groupbySingleFields1() throws IOException {
+        try (Stream<String> line = Files.lines(Paths.get("C:\\Users\\rsinghal\\IdeaProjects\\Java8\\src\\main\\resources\\TextFile"))) {
+            Map<List<String>,Set<String>> m =
+                    line.map(l->{
+                        String[] tokens = l.split("\\s+");
+                        return new Employee(tokens[0], Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]));
+                    }) .collect(Collectors.groupingBy(e -> {
+                        return new ArrayList<String>(
+                                Arrays.asList(
+                                        String.valueOf(e.getAge()),
+                                        String.valueOf(e.getSalary())
+                                )
+                        );
+                    }, Collectors.mapping(Employee::getName, Collectors.toSet())));
+            System.out.println(m);
+        }
+    }
+
 }
-class Employee{
-    String name ;
+
+class Employee {
+    String name;
     int age;
     int salary;
     int exp;

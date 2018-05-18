@@ -15,7 +15,7 @@ import java.util.stream.Stream;
  */
 public class Example1 {
     public static void main(String[] args) {
-        example12();
+        example5();
 
     }
     public static void example1() {
@@ -60,6 +60,7 @@ public class Example1 {
         map.put(4, "D");
         map.compute(3, (k, v) -> v.equals("C") ? null : "A");
         map.keySet().forEach(System.out::print);
+        System.out.println(map);
 
         /*
         Above code uses following newly introduced method from Java SE 8, understanding how that method works is necessary to solve this question.
@@ -89,7 +90,7 @@ public class Example1 {
     }*/
 
 
-  /*  public static void example7(String[] args){
+    /*public static void example7(String[] args){
         Stream<String> stream = Stream.of("Java","OCAJP","OCPJP");
         IntStream ins = stream.map(s ->s.length());
         ins.forEach(System.out::print);
