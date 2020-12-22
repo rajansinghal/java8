@@ -1,6 +1,6 @@
 package com.practice.java8.stream;
 
-import org.apache.commons.lang3.RandomStringUtils;
+//import org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -13,7 +13,7 @@ public class Example11 {
 
     public static void main(String[] args) {
 
-       String  str =  RandomStringUtils.randomAlphanumeric(3);
+       String  str = "";// RandomStringUtils.randomAlphanumeric(3);
         System.out.println(str.toUpperCase() + "--->");
         //example1();
         //example3();
